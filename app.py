@@ -2,7 +2,11 @@ from flask import Flask, render_template, redirect
 import requests
 import json
 from config import API_KEY, CRYPTO_ROUTE, GOLD_ROUTE
+from tensorflow.keras.models import load_model
 
+def ML_Forecast(crypto=None,gold=None): #Machine Learning Model Here
+    model = load_model("crypto_gold_price_forecasting.h5")
+    pass
 
 
 app = Flask(__name__)
@@ -11,16 +15,11 @@ app = Flask(__name__)
 def index():
     crypto_request = requests.get(f'{CRYPTO_ROUTE}{API_KEY}') #API CALL
     gold_request = requests.get(f'{GOLD_ROUTE}{API_KEY}') #API CALL
-    crypto = json.loads(crypto_request)
-    gold = json.loads(gold_request)
+    crypto_list = json.loads(crypto_request)
+    gold_list = json.loads(gold_request)
+    crypto,gold = ML_Forecast(crypto_list), ML_Forecast(gold_list)
+
     return render_template("index.html", crypto=crypto, gold=gold)
-
-
-@app.route("/api_call")
-def caller(): 
-    crypto = []
-    gold = []
-    return redirect("/", code=302)
 
 
 if __name__ == "__main__":
