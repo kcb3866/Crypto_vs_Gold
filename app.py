@@ -9,14 +9,18 @@ from tensorflow.keras.models import load_model
 
 def ML_Forecast(crypto=None,gold=None): #Machine Learning Model Here
     model = load_model("crypto_gold_price_forecasting.h5") #Load model
-    #Create forecast for gold
-        #Append forecast to list
-        #return list
-    #Create forecast for crypto
-        #Append forecast to list
-        #return list
-
-    pass
+    if crypto != None:
+        #Create forecast for gold
+            #Append forecast to list
+            #return list
+        pass
+    elif gold != None:
+        #Create forecast for crypto
+            #Append forecast to list
+            #return list
+        pass
+    else:
+        pass
 
 
 app = Flask(__name__)
